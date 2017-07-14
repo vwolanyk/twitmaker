@@ -11,12 +11,21 @@ class TweetsController < ApplicationController
       respond_to do |format|
         format.html do
           if @tweet.save
-            render partial: 'tweet', locals: {tweet: @tweet} 
+            render partial: 'tweet', locals: {tweet: @tweet}
           else
             # Address errors
           end
           end
-        end
+
+
+          format.json do
+            if @tweet.save
+              render :json => @tweet
+            end
+          end
+
+
+      end
   else
       @tweet = Tweet.new(tweet_params)
     if @tweet.save
@@ -25,6 +34,9 @@ class TweetsController < ApplicationController
       render :index
     end
   end
+
+
+  # Show Method End
   end
 
   def destroy
